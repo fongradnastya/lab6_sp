@@ -14,6 +14,7 @@
 
 #include"matrix.h"
 #include"input.h"
+#include"signals.c"
 
 #define ADDRES "127.0.0.1"
 #define PORT 5005
@@ -55,6 +56,13 @@ int main()
   
   struct sockaddr_in name;
   memset((char *) &name, 0, sizeof (name));
+
+  // Объявляем обработчики сигналов
+  signal(SIGINT, signalHandler);
+  signal(SIGTERM, signalHandler);
+  signal(SIGSEGV, signalHandler);
+
+  int timeout = 0;
 
   /* Store the server's name in the socket address.  */
   name.sin_family = AF_INET;
