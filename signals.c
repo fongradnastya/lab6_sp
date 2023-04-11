@@ -6,6 +6,8 @@
 #include <time.h>
 #include <stdarg.h>
 
+#include"signals.h"
+
 
 void signalHandler(int signum)
 {
@@ -42,15 +44,11 @@ void timeoutHandler()
     exit(1);
 }
 
-FILE* openLogFile(char** logFile, char* logFileName)
+FILE* openLogFile(char* logFileName)
 {
     // Если имя файла журнала не задано, то используем стандартное имя
-    if (*logFile == NULL)
-    {
-        *logFile = logFileName;
-    }
     // Открываем файл журнала для записи или создаем его, если он не существует
-    FILE* logfd = fopen(*logFile, "a");
+    FILE* logfd = fopen(logFileName, "a");
 
     // Проверяем на ошибки
     if (logfd == NULL)
@@ -92,7 +90,8 @@ void writeLog(const char* format, FILE* logfd, ...)
     va_end(args);
 }
 
-void setTimer(int timeout) {
+void setTimer(int timeout)
+{
     // Проверяем, что время ожидания задано
     if (timeout > 0) {
         // Устанавливаем таймер с помощью alarm

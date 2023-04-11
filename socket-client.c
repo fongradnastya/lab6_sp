@@ -8,13 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <signal.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 
 #include"matrix.h"
 #include"input.h"
-#include"signals.c"
+#include"signals.h"
 
 #define ADDRES "127.0.0.1"
 #define PORT 5005
@@ -62,14 +63,12 @@ int main(int argc, char* argv[])
   signal(SIGTERM, signalHandler);
   signal(SIGSEGV, signalHandler);
 
-  char* logFile;
+  char* logFileName;
   int timeout = 0;
 
-  parseArguments(argc, argv, &logFile, &timeout);
+  parseArguments(argc, argv, &logFileName, &timeout);
 
-  char* logFileName = "client.log";
-
-  FILE* file = openLogFile(logFile, logFileName);
+  FILE* file = openLogFile(logFileName);
 
 
   /* Store the server's name in the socket address.  */

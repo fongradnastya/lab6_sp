@@ -102,10 +102,11 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_client_OBJECTS = matrix.$(OBJEXT) socket-client.$(OBJEXT) \
-	input.$(OBJEXT)
+	input.$(OBJEXT) signals.$(OBJEXT)
 client_OBJECTS = $(am_client_OBJECTS)
 client_LDADD = $(LDADD)
-am_server_OBJECTS = matrix.$(OBJEXT) socket-server.$(OBJEXT)
+am_server_OBJECTS = matrix.$(OBJEXT) socket-server.$(OBJEXT) \
+	input.$(OBJEXT) signals.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -124,7 +125,8 @@ DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/input.Po ./$(DEPDIR)/matrix.Po \
-	./$(DEPDIR)/socket-client.Po ./$(DEPDIR)/socket-server.Po
+	./$(DEPDIR)/signals.Po ./$(DEPDIR)/socket-client.Po \
+	./$(DEPDIR)/socket-server.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -273,8 +275,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-client_SOURCES = matrix.c socket-client.c input.c
-server_SOURCES = matrix.c socket-server.c 
+client_SOURCES = matrix.c socket-client.c input.c signals.c
+server_SOURCES = matrix.c socket-server.c input.c signals.c
 AM_CFLAGS = -std=c99 -D_XOPEN_SOURCE=500
 all: all-am
 
@@ -372,6 +374,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/input.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signals.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/socket-client.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/socket-server.Po@am__quote@ # am--include-marker
 
@@ -671,6 +674,7 @@ distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f ./$(DEPDIR)/input.Po
 	-rm -f ./$(DEPDIR)/matrix.Po
+	-rm -f ./$(DEPDIR)/signals.Po
 	-rm -f ./$(DEPDIR)/socket-client.Po
 	-rm -f ./$(DEPDIR)/socket-server.Po
 	-rm -f Makefile
@@ -722,6 +726,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f ./$(DEPDIR)/input.Po
 	-rm -f ./$(DEPDIR)/matrix.Po
+	-rm -f ./$(DEPDIR)/signals.Po
 	-rm -f ./$(DEPDIR)/socket-client.Po
 	-rm -f ./$(DEPDIR)/socket-server.Po
 	-rm -f Makefile

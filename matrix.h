@@ -5,6 +5,9 @@
  *           и модификации двумерных массивов
  */
 
+#ifndef MATRIX_H
+#define MATRIX_H
+
 /*!
  * \brief Выводит элементв матрицы в консоль
  * \param[in] matrix матрица для вывода
@@ -43,3 +46,5 @@ void matrixProcessing(int** matrix, int size);
  * \return квадратная матрица из элементов строки
  */
 int** getMatrixFromString(char* str);
+
+#endif

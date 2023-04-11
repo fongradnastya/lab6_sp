@@ -5,6 +5,9 @@
  *           для обраотки пользовательского ввода
  */
 
+#ifndef INPUT_H
+#define INPUT_H
+
 int parseArguments(int argc, char* argv[], char** logFile, int* timeout);
 
 /*!
@@ -33,3 +36,5 @@ int InputMatrix(int** matrix, int size);
  * \return значение размера
  */
 int InputSize();
+
+#endif

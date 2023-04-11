@@ -3,6 +3,6 @@
 Для запуска программы через терминал линукс последовательно введите команды:
 
 ```bash
-./client
-./server
+./client -l server.lof -t 2
+./server -l server.lof -t 2
 ```
