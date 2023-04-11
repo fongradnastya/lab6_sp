@@ -59,7 +59,7 @@ FILE* openLogFile(char* logFileName)
     return logfd;
 }
 
-void writeLog(const char* format, FILE* logfd, ...)
+void writeLog(FILE* logfd, const char* format, ...)
 {
     // Проверяем, что файл журнала открыт
     if (logfd == NULL)

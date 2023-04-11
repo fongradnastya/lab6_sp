@@ -25,7 +25,7 @@
  *  \param  serverSocket дескриптор прослушиваемого сокета
  *  \return код завершения работы
  */
-int server(int serverSocket)
+int server(int serverSocket, FILE* logfd)
 {
   struct sockaddr_in clientName;
   socklen_t clientNameLength = sizeof (clientName);
@@ -36,8 +36,12 @@ int server(int serverSocket)
                               (struct sockaddr *) &clientName,
                               &clientNameLength
                              );
-    printf("Received a request from %s:%d\n", inet_ntoa(clientName.sin_addr), ntohs(clientName.sin_port));
+    writeLog(logfd, "Received a request from %s:%d\n", 
+      inet_ntoa(clientName.sin_addr), ntohs(clientName.sin_port));
+    printf("Received a request from %s:%d\n", 
+      inet_ntoa(clientName.sin_addr), ntohs(clientName.sin_port));
     buffer[recvResult] = '\0';
+    writeLog(logfd, "Request content: %s\n", buffer);
     printf("Request content: %s\n", buffer);
     printf("Response:\n");
     if (recvResult == -1)
@@ -78,6 +82,7 @@ int main(int argc, char* argv[])
   /* Create the socket.  */
   socketFileDescriptor = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   int i = 1;
+  writeLog(file, "%s\n", "Socket created");
   printf("Socket created\n");
   setsockopt(socketFileDescriptor, SOL_SOCKET, SO_REUSEADDR,
              (const char *)&i, sizeof (i)
@@ -96,11 +101,12 @@ int main(int argc, char* argv[])
     close(socketFileDescriptor);
     exit(1);
   }
+  writeLog(file, "%s\n", "Started listening client's requests");
   printf("Started listening client's requests\n");
   /* Handle the connection.  */
   do
   {
-    clientSentQuitMessage = server(socketFileDescriptor);
+    clientSentQuitMessage = server(socketFileDescriptor, file);
   } while (!clientSentQuitMessage);
 
   /* Close the socket.  */

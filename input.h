@@ -8,7 +8,14 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-int parseArguments(int argc, char* argv[], char** logFile, int* timeout);
+/*!
+ * \brief Считывает целое число из консоли
+ * \param[in] argc количество аргументов командной строки
+ * \param[in] argv массив аргументов командной строки
+ * \param[out] logFile имя лог файла
+ * \param[out] timeout время ожидания запроса
+ */
+void parseArguments(int argc, char* argv[], char** logFile, int* timeout);
 
 /*!
  * \brief Считывает строку из консоли

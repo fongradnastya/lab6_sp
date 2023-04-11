@@ -6,7 +6,7 @@
 #include"input.h"
 
 
-int parseArguments(int argc, char* argv[], char** logFile, int* timeout)
+void parseArguments(int argc, char* argv[], char** logFile, int* timeout)
 {
     int opt;
     // Опции для getopt

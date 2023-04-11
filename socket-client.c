@@ -42,6 +42,7 @@ void sendMatrix(int** matrix, int size, int socketFileDescriptor, struct sockadd
   int resSend = 0;
   resSend = sendto(socketFileDescriptor, &buffer, 
     strlen(buffer), 0, (struct sockaddr *) &name, sizeof (name));
+  // writeLog("%s\n", buffer);
   if (0 > resSend)
   {
     perror("sendto");
@@ -98,8 +99,10 @@ int main(int argc, char* argv[])
     }
     int res = InputMatrix(matrix, size);
     if(res == 1){
+        writeLog(file, "%s\n", "Matrix succesfully created");
         printf("Matrix succesfully created\n");
         sendMatrix(matrix, size, socketFileDescriptor, name);
+        writeLog(file, "%s\n", "The matrix was sended to the server");
         printf("The matrix was sended to the server\n");
     }
     getchar();
