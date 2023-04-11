@@ -71,6 +71,7 @@ int main(int argc, char* argv[])
   signal(SIGINT, signalHandler);
   signal(SIGTERM, signalHandler);
   signal(SIGSEGV, signalHandler);
+  signal(SIGALRM, timeoutHandler);
 
   char* logFileName;
   int timeout = 0;
@@ -106,6 +107,7 @@ int main(int argc, char* argv[])
   /* Handle the connection.  */
   do
   {
+    setTimer(timeout);
     clientSentQuitMessage = server(socketFileDescriptor, file);
   } while (!clientSentQuitMessage);
 

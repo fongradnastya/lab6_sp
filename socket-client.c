@@ -63,6 +63,7 @@ int main(int argc, char* argv[])
   signal(SIGINT, signalHandler);
   signal(SIGTERM, signalHandler);
   signal(SIGSEGV, signalHandler);
+  signal(SIGALRM, timeoutHandler);
 
   char* logFileName;
   int timeout = 0;
@@ -91,6 +92,7 @@ int main(int argc, char* argv[])
   printf("---------------------------------------\n");
   do
   {
+    setTimer(timeout);
     int size = InputSize();
     int** matrix = (int**) malloc(size * sizeof(int*));
     for(int i = 0; i < size; i++)
