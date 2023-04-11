@@ -5,6 +5,35 @@
 
 #include"input.h"
 
+
+int parseArguments(int argc, char* argv[], char** logFile, int* timeout)
+{
+    int opt;
+    // Опции для getopt
+    const char* optstring = "l:t:";
+    // Парсим аргументы с помощью getopt
+    while ((opt = getopt(argc, argv, optstring)) != -1)
+    {
+        switch (opt) {
+            case 'l': // имя файла журнала
+                *logFile = optarg;
+                break;
+            case 't': // время ожидания сообщений от клиента
+                *timeout = atoi(optarg);
+                if (*timeout < 0)
+                {
+                    fprintf(stderr, "This value should be positive.\n");
+                    exit(1);
+                }
+                break;
+            default: // неверный аргумент
+                fprintf(stderr,
+                        "Using: %s [-l logFile] [-t timeout]\n", argv[0]);
+                exit(1);
+        }
+    }
+}
+
 char* GetString()
 {
     int len = 0;

@@ -5,6 +5,8 @@
  *           для обраотки пользовательского ввода
  */
 
+int parseArguments(int argc, char* argv[], char** logFile, int* timeout);
+
 /*!
  * \brief Считывает строку из консоли
  * \return полученная строка

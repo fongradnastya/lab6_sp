@@ -50,7 +50,7 @@ void sendMatrix(int** matrix, int size, int socketFileDescriptor, struct sockadd
 /*! \brief Запускает работу клиентского приложения
  *  \return код завершения выполнения
 */
-int main()
+int main(int argc, char* argv[])
 {
   int socketFileDescriptor;
   
@@ -62,7 +62,15 @@ int main()
   signal(SIGTERM, signalHandler);
   signal(SIGSEGV, signalHandler);
 
+  char* logFile;
   int timeout = 0;
+
+  parseArguments(argc, argv, &logFile, &timeout);
+
+  char* logFileName = "client.log";
+
+  FILE* file = openLogFile(logFile, logFileName);
+
 
   /* Store the server's name in the socket address.  */
   name.sin_family = AF_INET;

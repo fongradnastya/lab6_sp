@@ -42,7 +42,7 @@ void timeoutHandler()
     exit(1);
 }
 
-void openLogFile(char** logFile, char* logFileName)
+FILE* openLogFile(char** logFile, char* logFileName)
 {
     // Если имя файла журнала не задано, то используем стандартное имя
     if (*logFile == NULL)

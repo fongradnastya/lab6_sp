@@ -13,6 +13,8 @@
 #include <unistd.h>
 
 #include"matrix.h"
+#include"input.h"
+#include"signals.c"
 
 #define PORT 5005
 #define BUFFSIZE 4048
@@ -53,12 +55,27 @@ int server(int serverSocket)
 /*! \brief Запускает работу сервера
  *  \return код завершения выполнения
 */
-int main()
+int main(int argc, char* argv[])
 {
   int socketFileDescriptor = -1;
   
   struct sockaddr_in name;
   int clientSentQuitMessage;
+
+  // Объявляем обработчики сигналов
+  signal(SIGINT, signalHandler);
+  signal(SIGTERM, signalHandler);
+  signal(SIGSEGV, signalHandler);
+
+  char* logFile;
+  int timeout = 0;
+
+  parseArguments(argc, argv, &logFile, &timeout);
+
+  char* logFileName = "server.log";
+
+  FILE* file = openLogFile(logFile, logFileName);
+
 
   /* Create the socket.  */
   socketFileDescriptor = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
